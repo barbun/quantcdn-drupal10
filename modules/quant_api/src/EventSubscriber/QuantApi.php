@@ -9,7 +9,7 @@ use Drupal\quant_api\Client\QuantClientInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\quant_api\Exception\InvalidPayload;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Drupal\quant\Plugin\QueueItem\FileItem;
 use Drupal\quant\Plugin\QueueItem\RouteItem;
 use Drupal\quant\Seed;
@@ -36,7 +36,7 @@ class QuantApi implements EventSubscriberInterface {
   /**
    * The event dispatcher.
    *
-   * @var \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
   protected $eventDispatcher;
 
@@ -50,10 +50,10 @@ class QuantApi implements EventSubscriberInterface {
    *   The Drupal HTTP Client to make requests.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger channel factory.
-   * @param \Drupal\Component\EventDispatcher\ContainerAwareEventDispatcher $event_dispatcher
+   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $event_dispatcher
    *   The event dispatcher.
    */
-  public function __construct(QuantClientInterface $client, LoggerChannelFactoryInterface $logger_factory, ContainerAwareEventDispatcher $event_dispatcher) {
+  public function __construct(QuantClientInterface $client, LoggerChannelFactoryInterface $logger_factory, EventDispatcherInterface $event_dispatcher) {
     $this->client = $client;
     $this->logger = $logger_factory->get('quant_api');
     $this->eventDispatcher = $event_dispatcher;
