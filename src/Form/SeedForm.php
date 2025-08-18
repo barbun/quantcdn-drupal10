@@ -313,13 +313,13 @@ class SeedForm extends FormBase {
       ->save();
 
     if (isset($trigger['#op']) && $trigger['#op'] == 'save') {
-      \Drupal::messenger()->addStatus(t('Successfully updated configuration.'));
+      \Drupal::messenger()->addStatus($this->t('Successfully updated configuration.'));
       return;
     }
 
     if ($config->get('api_token')) {
       if (!$project = $this->client->ping()) {
-        \Drupal::messenger()->addError(t('Unable to connect to Quant API, check settings.'));
+        \Drupal::messenger()->addError($this->t('Unable to connect to Quant API, check settings.'));
         return;
       }
     }

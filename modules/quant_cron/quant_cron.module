@@ -161,7 +161,7 @@ function get_theme_routes() {
   $themeName = $config->get('default');
   $path = \Drupal::service('theme_handler')->getTheme($themeName)->getPath();
 
-  $themePath = DRUPAL_ROOT . '/' . $path;
+  $themePath = \Drupal::root() . '/' . $path;
   $scheme = \Drupal::config('system.file')->get('default_scheme');
   $filesPath = \Drupal::service('file_system')->realpath($scheme . "://");
 
@@ -175,7 +175,7 @@ function get_theme_routes() {
   $regex = new \RegexIterator($iterator, '/^.+(.jpe?g|.png|.svg|.ttf|.woff|.woff2|.otf|.ico|.js|.css)$/i', \RecursiveRegexIterator::GET_MATCH);
 
   foreach ($regex as $name => $r) {
-    $path = str_replace(DRUPAL_ROOT, '', $name);
+    $path = str_replace(\Drupal::root(), '', $name);
     $paths[] = $path;
   }
 
@@ -193,7 +193,7 @@ function get_theme_routes() {
   }
 
   foreach ($iterator as $fileInfo) {
-    $path = str_replace(DRUPAL_ROOT, '', $fileInfo->getPathname());
+    $path = str_replace(\Drupal::root(), '', $fileInfo->getPathname());
     $paths[] = $path;
   }
 

@@ -49,7 +49,7 @@ function quant_node_insert(EntityInterface $entity) {
     'args' => $entity,
   ];
 
-  drupal_register_shutdown_function('quant_shutdown', $context);
+  register_shutdown_function('quant_shutdown', $context);
 }
 
 /**
@@ -81,7 +81,7 @@ function quant_node_update(EntityInterface $entity) {
     'args' => $entity,
   ];
 
-  drupal_register_shutdown_function('quant_shutdown', $context);
+  register_shutdown_function('quant_shutdown', $context);
 }
 
 /**
@@ -100,7 +100,7 @@ function quant_taxonomy_term_insert(EntityInterface $entity) {
     'args' => $entity,
   ];
 
-  drupal_register_shutdown_function('quant_shutdown', $context);
+  register_shutdown_function('quant_shutdown', $context);
 }
 
 /**
@@ -119,7 +119,7 @@ function quant_taxonomy_term_update(EntityInterface $entity) {
     'args' => $entity,
   ];
 
-  drupal_register_shutdown_function('quant_shutdown', $context);
+  register_shutdown_function('quant_shutdown', $context);
 }
 
 /**
@@ -155,7 +155,7 @@ function quant_shutdown(array $context = []) {
   }
 
   if (is_callable($context['callback'])) {
-    drupal_register_shutdown_function($context['callback'], $context['args']);
+    register_shutdown_function($context['callback'], $context['args']);
   }
 }
 

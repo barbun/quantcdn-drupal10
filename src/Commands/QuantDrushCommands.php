@@ -43,8 +43,8 @@ class QuantDrushCommands extends DrushCommands {
 
     // Support composer location in any number of places.
     $testPaths += [
-      DRUPAL_ROOT . '/../vendor/bin/drush',
-      DRUPAL_ROOT . '/vendor/bin/drush',
+      \Drupal::root() . '/../vendor/bin/drush',
+      \Drupal::root() . '/vendor/bin/drush',
       getenv('HOME') . '/.composer/vendor/bin/drush',
     ];
 

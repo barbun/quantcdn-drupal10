@@ -51,7 +51,7 @@ class RouteItem implements QuantQueueItemInterface {
 
     $this->route = $route;
     $this->uri = isset($data['uri']) ? $data['uri'] : strtok($route, '?');
-    $this->filePath = isset($data['file_path']) ? $data['file_path'] : DRUPAL_ROOT . strtok($route, '?');
+    $this->filePath = isset($data['file_path']) ? $data['file_path'] : \Drupal::root() . strtok($route, '?');
   }
 
   /**

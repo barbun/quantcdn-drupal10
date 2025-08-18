@@ -146,7 +146,7 @@ class CollectionSubscriber implements EventSubscriberInterface {
     $themeName = $config->get('default');
     $path = \Drupal::service('theme_handler')->getTheme($themeName)->getPath();
 
-    $themePath = DRUPAL_ROOT . '/' . $path;
+    $themePath = \Drupal::root() . '/' . $path;
     $scheme = \Drupal::config('system.file')->get('default_scheme');
     $filesPath = \Drupal::service('file_system')->realpath($scheme . "://");
 
@@ -165,7 +165,7 @@ class CollectionSubscriber implements EventSubscriberInterface {
         continue;
       }
 
-      $path = str_replace(DRUPAL_ROOT, '', $name);
+      $path = str_replace(\Drupal::root(), '', $name);
       $event->queueItem(['file' => $path]);
     }
 
@@ -183,7 +183,7 @@ class CollectionSubscriber implements EventSubscriberInterface {
     }
 
     foreach ($iterator as $fileInfo) {
-      $path = str_replace(DRUPAL_ROOT, '', $fileInfo->getPathname());
+      $path = str_replace(\Drupal::root(), '', $fileInfo->getPathname());
       $event->queueItem(['file' => $path]);
     }
   }

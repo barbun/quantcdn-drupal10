@@ -167,7 +167,7 @@ class QuantApi implements EventSubscriberInterface {
       $file = strtok($url, '?');
 
       // Resolve to a path on disk.
-      $fileOnDisk = DRUPAL_ROOT . $file;
+      $fileOnDisk = \Drupal::root() . $file;
 
       // Override if this looks like a private file.
       if (strpos($file, '/system/files/') !== FALSE) {

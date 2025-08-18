@@ -31,7 +31,7 @@ class Seed {
       );
     }
     else {
-      $message = t('Finished with an error.');
+      $message = \Drupal::translation()->translate('Finished with an error.');
     }
     \Drupal::messenger()->addMessage($message);
   }
@@ -56,7 +56,7 @@ class Seed {
       if ($filename->isDir()) {
         continue;
       }
-      $files[] = str_replace(DRUPAL_ROOT, '', $filename->getPathname());
+      $files[] = str_replace(\Drupal::root(), '', $filename->getPathname());
     }
 
     $files[] = '/' . \Drupal::service('extension.list.module')->getPath('lunr') . '/js/search.worker.js';

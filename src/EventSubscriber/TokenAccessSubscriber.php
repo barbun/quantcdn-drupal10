@@ -66,19 +66,19 @@ class TokenAccessSubscriber implements EventSubscriberInterface {
       // Allow access when token validation is disabled.
     }
     catch (ExpiredTokenException $e) {
-      throw new ServiceUnavailableHttpException(NULL, t('Token request: time mismatch. Received [:token_time] expected [:server_time]', [
+      throw new ServiceUnavailableHttpException(NULL, \Drupal::translation()->translate('Token request: time mismatch. Received [:token_time] expected [:server_time]', [
         ':token_time' => $e->getTime(),
         ':server_time' => $e->getServerTime(),
       ]));
     }
     catch (StrictTokenException $e) {
-      throw new ServiceUnavailableHttpException(NULL, t('Token request: route mismatch. Received [:route] expected [:expected]', [
+      throw new ServiceUnavailableHttpException(NULL, \Drupal::translation()->translate('Token request: route mismatch. Received [:route] expected [:expected]', [
         ':route' => $e->getTokenRoute(),
         ':expected' => $e->getExpectedRoute(),
       ]));
     }
     catch (InvalidTokenException $e) {
-      throw new ServiceUnavailableHttpException(NULL, t('Token request: Invalid token'));
+      throw new ServiceUnavailableHttpException(NULL, \Drupal::translation()->translate('Token request: Invalid token'));
     }
   }
 

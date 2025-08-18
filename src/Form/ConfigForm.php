@@ -45,7 +45,7 @@ class ConfigForm extends ConfigFormBase {
     $tokenConfig = $this->config('quant.token_settings');
 
     if ($tokenConfig->get('disable')) {
-      \Drupal::messenger()->addWarning(t('Internal Quant tokens are disabled. It is recommended these are enabled where possible.'));
+      \Drupal::messenger()->addWarning($this->t('Internal Quant tokens are disabled. It is recommended these are enabled where possible.'));
     }
 
     $this->checkValidationRoute();
@@ -195,12 +195,12 @@ class ConfigForm extends ConfigFormBase {
 
     if (!empty($markup[0])) {
       if (strpos($markup[0], 'quant success') !== FALSE) {
-        \Drupal::messenger()->addMessage(t('Connected successfully.'));
+        \Drupal::messenger()->addMessage($this->t('Connected successfully.'));
         return TRUE;
       }
     }
 
-    \Drupal::messenger()->addError(t('Unable to connect to local webserver. Check webserver and host header settings.'));
+    \Drupal::messenger()->addError($this->t('Unable to connect to local webserver. Check webserver and host header settings.'));
     return FALSE;
 
   }
