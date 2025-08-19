@@ -39,10 +39,18 @@ class FileItem implements QuantQueueItemInterface {
       $image_style_url = $local_host . $this->fullPath;
 
       $headers['Host'] = $hostname;
-      $auth = !empty($_SERVER['PHP_AUTH_USER']) ? [
-        $_SERVER['PHP_AUTH_USER'],
-        $_SERVER['PHP_AUTH_PW'],
-      ] : [];
+      
+      // Support basic auth - try config first, then fallback to server vars.
+      $auth_username = $config->get('basic_auth_username');
+      $auth_password = $config->get('basic_auth_password');
+      
+      if (!empty($auth_username) && !empty($auth_password)) {
+        $auth = [$auth_username, $auth_password];
+      } elseif (!empty($_SERVER['PHP_AUTH_USER'])) {
+        $auth = [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']];
+      } else {
+        $auth = [];
+      }
 
       \Drupal::httpClient()->get($image_style_url, [
         'http_errors' => FALSE,

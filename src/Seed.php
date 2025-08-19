@@ -281,11 +281,17 @@ class Seed {
     // Generate a signed token and use it in the request.
     $headers['quant-token'] = \Drupal::service('quant.token_manager')->create($route);
 
-    // Support basic auth if enabled (note: will not work via drush/cli).
-    $auth = !empty($_SERVER['PHP_AUTH_USER']) ? [
-      $_SERVER['PHP_AUTH_USER'],
-      $_SERVER['PHP_AUTH_PW'],
-    ] : [];
+    // Support basic auth - try config first, then fallback to server vars.
+    $auth_username = $config->get('basic_auth_username');
+    $auth_password = $config->get('basic_auth_password');
+    
+    if (!empty($auth_username) && !empty($auth_password)) {
+      $auth = [$auth_username, $auth_password];
+    } elseif (!empty($_SERVER['PHP_AUTH_USER'])) {
+      $auth = [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']];
+    } else {
+      $auth = [];
+    }
 
     try {
       $response = \Drupal::httpClient()->head($url, [
@@ -337,11 +343,17 @@ class Seed {
     // Generate a signed token and use it in the request.
     $headers['quant-token'] = \Drupal::service('quant.token_manager')->create($route);
 
-    // Support basic auth if enabled (note: will not work via drush/cli).
-    $auth = !empty($_SERVER['PHP_AUTH_USER']) ? [
-      $_SERVER['PHP_AUTH_USER'],
-      $_SERVER['PHP_AUTH_PW'],
-    ] : [];
+    // Support basic auth - try config first, then fallback to server vars.
+    $auth_username = $config->get('basic_auth_username');
+    $auth_password = $config->get('basic_auth_password');
+    
+    if (!empty($auth_username) && !empty($auth_password)) {
+      $auth = [$auth_username, $auth_password];
+    } elseif (!empty($_SERVER['PHP_AUTH_USER'])) {
+      $auth = [$_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']];
+    } else {
+      $auth = [];
+    }
 
     // @todo ; Note: Passing in the Host header fixes issues with absolute links.
     // It may also cause some redirects to the real host.

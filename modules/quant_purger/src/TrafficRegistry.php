@@ -37,7 +37,7 @@ class TrafficRegistry implements TrafficRegistryInterface {
     $this->connection->merge('purge_queuer_quant')
       ->insertFields($fields)
       ->updateFields($fields)
-      ->key(['url' => $url])
+      ->key('url', $url)
       ->execute();
   }
 

@@ -147,6 +147,27 @@ class ConfigForm extends ConfigFormBase {
       '#default_value' => $config->get('ssl_cert_verify'),
     ];
 
+    $form['basic_auth'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Basic Authentication'),
+      '#description' => $this->t('If your webserver requires Basic Auth, provide credentials for internal requests (required for Drush/CLI operations).'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    ];
+
+    $form['basic_auth']['basic_auth_username'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Username'),
+      '#description' => $this->t('Basic Auth username for internal requests.'),
+      '#default_value' => $config->get('basic_auth_username'),
+    ];
+
+    $form['basic_auth']['basic_auth_password'] = [
+      '#type' => 'password',
+      '#title' => $this->t('Password'),
+      '#description' => $this->t('Basic Auth password for internal requests. Leave empty to keep existing password.'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -168,7 +189,16 @@ class ConfigForm extends ConfigFormBase {
       ->set('disable_content_drafts', $form_state->getValue('disable_content_drafts'))
       ->set('ssl_cert_verify', $form_state->getValue('ssl_cert_verify'))
       ->set('xpath_selectors', $form_state->getValue('xpath_selectors'))
-      ->save();
+      ->set('basic_auth_username', $form_state->getValue('basic_auth_username'));
+
+    // Only update password if a new one is provided
+    $password = $form_state->getValue('basic_auth_password');
+    if (!empty($password)) {
+      $this->configFactory->getEditable(static::SETTINGS)
+        ->set('basic_auth_password', $password);
+    }
+
+    $this->configFactory->getEditable(static::SETTINGS)->save();
 
     parent::submitForm($form, $form_state);
   }
