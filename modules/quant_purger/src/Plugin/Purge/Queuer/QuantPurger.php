@@ -4,19 +4,14 @@ namespace Drupal\quant_purger\Plugin\Purge\Queuer;
 
 use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\quant\Plugin\QueueItem\RouteItem;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 
 /**
  * Queues URLs with Quant when Drupal invalidates cache tags.
  */
-class QuantPurger implements CacheTagsInvalidatorInterface {
-
-  /**
-   * The service container.
-   *
-   * @var \Symfony\Component\DependencyInjection\ContainerInterface
-   */
-  protected $container;
+class QuantPurger implements CacheTagsInvalidatorInterface, ContainerAwareInterface {
+  use ContainerAwareTrait;
 
   /**
    * A list of tags that have already been invalidated in this request.
@@ -60,15 +55,6 @@ class QuantPurger implements CacheTagsInvalidatorInterface {
    */
   protected $quantSeedQueue;
 
-  /**
-   * Constructs a QuantPurger object.
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The service container.
-   */
-  public function __construct(ContainerInterface $container) {
-    $this->container = $container;
-  }
 
   /**
    * Initialize the invalidation factory and queue service.

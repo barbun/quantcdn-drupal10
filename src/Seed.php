@@ -388,7 +388,9 @@ class Seed {
 
       default:
         $messenger = \Drupal::messenger();
-        $messenger->addMessage("Non-200 response for {$route}: " . $response->getStatusCode(), $messenger::TYPE_WARNING);
+        $status_code = $response->getStatusCode();
+        $messenger->addMessage("Non-200 response for {$route}: {$status_code}", $messenger::TYPE_WARNING);
+        \Drupal::logger('quant_seed')->error("Failed to generate markup for {$route}. HTTP {$status_code}: {$response->getBody()}");
         return FALSE;
     }
 
