@@ -19,6 +19,20 @@ class FileItem implements QuantQueueItemInterface {
   private $file;
 
   /**
+   * The URL for the file.
+   *
+   * @var string|null
+   */
+  private $url;
+
+  /**
+   * The full path to the file.
+   *
+   * @var string|null
+   */
+  private $fullPath;
+
+  /**
    * {@inheritdoc}
    */
   public function __construct(array $data = []) {

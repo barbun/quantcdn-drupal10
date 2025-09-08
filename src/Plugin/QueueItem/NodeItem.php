@@ -25,6 +25,13 @@ class NodeItem implements QuantQueueItemInterface {
    */
   private $filter;
 
+  /**
+   * The revision ID of the entity.
+   *
+   * @var int|false
+   */
+  private $vid;
+
 
   /**
    * Include entity revisions.
