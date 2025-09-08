@@ -19,6 +19,13 @@ use GuzzleHttp\RequestOptions;
 class QuantClient implements QuantClientInterface {
 
   /**
+   * The HTTP client.
+   *
+   * @var \GuzzleHttp\Client
+   */
+  protected $client;
+
+  /**
    * The logger service.
    *
    * @var \Drupal\Core\Logger\LoggerChannelInterface
