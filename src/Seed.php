@@ -347,7 +347,7 @@ class Seed {
     // It may also cause some redirects to the real host.
     // Best to trap redirects and re-run against the final path.
     try {
-      $response = \Drupal::httpClient()->post($url, [
+      $response = \Drupal::httpClient()->get($url, [
         'http_errors' => FALSE,
         'headers' => $headers,
         'auth' => $auth,
